@@ -260,7 +260,7 @@ public class pruebas {
             m.crearMatriz(5);
             m.getCelda()[3][3].setValor(2);
             m.imprimirMatriz();
-            if(columnaArr(m,2,4,3)==true){
+            if(columnaAba(m,2,0,3)==true){
                 System.out.println("repetido");
             }
         }
