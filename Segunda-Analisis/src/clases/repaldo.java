@@ -5,9 +5,14 @@
  */
 package clases;
 
+import static clases.pruebas.backNum;
+import static clases.pruebas.backResolver;
+import static clases.pruebas.cantidadLista;
+import static clases.pruebas.correctoVector;
 import static clases.pruebas.menorFilas;
 import static clases.pruebas.pocasPermutaciones;
 import static clases.pruebas.solucion;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +38,32 @@ public class repaldo {
         }
         if(solucion(m)==false){
             m.imprimirMatriz();
+        }
+        return m;
+    }
+    
+    
+    public static Matriz pocasPermutaciones(Matriz m,int fila,int columna,int espacios){
+        int result[] = new int[espacios];
+        ArrayList<int[]> resultado = new ArrayList<int[]>();
+        int numero = m.getCelda()[fila][columna-1].getDerecha();
+        //System.out.println(numero+ " "+fila+" "+columna);
+        backNum(result,numero,resultado,0);
+        for(int i=0;i<resultado.size();i++){
+            int [] permutacion = resultado.get(i);
+            if(correctoVector(m,permutacion,fila,columna)!=true){
+                for(int j=0;j<espacios;j++){
+                //System.out.println(permutacion[j]);
+                    m.getCelda()[fila][columna+j].setValor(permutacion[j]);
+                    m.getCelda()[fila][columna+j].setTipo("t4");
+                }
+                int res = cantidadLista(m);
+                //m.imprimirMatriz();
+                //System.out.println(res);
+                System.out.println("-------------------------------");
+                backResolver(m,res);
+            }
+            
         }
         return m;
     }

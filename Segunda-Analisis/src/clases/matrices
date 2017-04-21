@@ -1,0 +1,20 @@
+
+--------------------------------------------------------------------------------
+
+            Matriz m = new Matriz();
+            m.crearMatriz(6);
+            m.getCelda()[0][0].setTipo("t3");
+            m.getCelda()[1][0].setTipo("t3");
+            m.getCelda()[1][0].setDerecha(14);
+            m.getCelda()[0][4].setTipo("t3");
+            m.getCelda()[1][4].setTipo("t3");
+            m.getCelda()[2][4].setTipo("t3");
+            m.getCelda()[3][0].setTipo("t3");
+            m.getCelda()[3][3].setTipo("t3");
+            m.getCelda()[3][4].setTipo("t3");
+            m.getCelda()[4][0].setTipo("t3");
+            m.getCelda()[4][0].setDerecha(23);
+            m.getCelda()[3][0].setDerecha(5);
+            m.getCelda()[2][0].setTipo("t3");
+            m.getCelda()[2][0].setDerecha(9);
+--------------------------------------------------------------------------------

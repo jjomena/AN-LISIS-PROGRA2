@@ -82,6 +82,18 @@ public class Matriz {
             }
         }
     }
+
+    public int getTablero() {
+        return tablero;
+    }
+
+    public void setTablero(int tablero) {
+        this.tablero = tablero;
+    }
+
+    public Celda[][] getMatriz() {
+        return matriz;
+    }
     
     @Override
     public String toString() {
