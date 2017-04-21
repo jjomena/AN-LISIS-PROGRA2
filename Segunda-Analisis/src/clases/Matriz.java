@@ -35,7 +35,7 @@ public class Matriz {
             for(int j=0;j<matriz.length;j++){
             Celda celda;
             if(i==0 || i==matriz.length-1 || j==0 || j==matriz.length-1){
-                celda = new Celda(-1);
+                celda = new Celda();
                 matriz[i][j] = celda;    
             }else{
                 celda = new Celda(0);
