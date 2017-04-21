@@ -226,15 +226,79 @@ public class pruebas {
         }
     }
     
-    public static Matriz backResolver(Matriz m,int tamano,int colocadas){
-        m.crearMatriz(tamano);
-        if(colocadas==m.getTamano()){
-            return m;
-        }else{
-            
+    public static int[]menorFilas(Matriz m){
+        int []result = new int[3];
+        for(int i=0;i<m.getTamano();i++){
+            int contador = 0;
+            int fila = i;
+            for(int j=0;j<m.getTamano();j++){
+                if("t2".equals(m.getCelda()[i][j].getTipo())){
+                    contador++;
+                }else{
+                    if(contador!=0){
+                        if(result[0]>contador  || result[0]==0){
+                            result[0]=contador;
+                            result[1]=fila;
+                            result[2]=j-contador;
+                            contador= 0;
+                        }else{
+                            contador =0;
+                        }
+                    }
+                }
+            }
+        }       
+        return result;
+    }
+    
+    public static int cantidadLista(Matriz m){
+        int contador = 0;
+        for(int i=0;i<m.getTamano();i++){
+            for(int j=0;j<m.getTamano();j++){
+                if(!"t2".equals(m.getCelda()[i][j].getTipo())){
+                    contador++;
+                }
+            }
+        }
+        
+        return contador;
+    }
+    
+    public static Matriz pocasPermutaciones(Matriz m,int fila,int columna,int espacios){
+        int result[] = new int[espacios];
+        ArrayList<int[]> resultado = new ArrayList<int[]>();
+        int numero = m.getCelda()[fila][columna-1].getDerecha();
+        backNum(result,numero,resultado,0);
+        for(int i=0;i<resultado.size();i++){
+            int [] permutacion = resultado.get(i);
+            for(int j=0;j<espacios;j++){
+                System.out.println(permutacion[j]);
+                m.getCelda()[fila][columna+j].setValor(permutacion[j]);
+                m.getCelda()[fila][columna+j].setTipo("t4");
+            }
+            int res = cantidadLista(m);
+            m.imprimirMatriz();
+            //System.out.println(res);
+            System.out.println("-------------------------------");
+            backResolver(m,res);
         }
         return m;
     }
+    
+    public static Matriz backResolver(Matriz m,int colocadas){
+        if(colocadas==m.getTamano()){
+            return m;
+        }else{
+            int[]menor = menorFilas(m);
+            if(menor[0]==2){
+                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
+            }
+        }
+        //m.imprimirMatriz();
+        return m;
+    }
+    
+    
     
     public static Matriz rellenarPared(Matriz m){
         
@@ -245,9 +309,9 @@ public class pruebas {
     public static void main(String[] args) {
         // TODO code application logic here
 //        pruebas prue  = new pruebas();
-        int per = 1; int per1 = 1;
-        int numero = 4;
-        int casillas = 2;
+        int per = 12; int per1 = 12; int per2=1;
+        int numero = 17;
+        int casillas = 3;
         int result[] = new int[casillas];
         ArrayList<int[]> resultado = new ArrayList<int[]>();
         if(per ==1){
@@ -264,7 +328,31 @@ public class pruebas {
                 System.out.println("repetido");
             }
         }
-        
+        if(per2==1){
+            Matriz m = new Matriz();
+            m.crearMatriz(5);
+            m.getCelda()[0][0].setTipo("t3");
+            m.getCelda()[0][4].setTipo("t3");
+            m.getCelda()[1][4].setTipo("t3");
+            m.getCelda()[2][3].setTipo("t3");
+            m.getCelda()[2][4].setTipo("t3");
+            m.getCelda()[3][0].setTipo("t3");
+            m.getCelda()[3][3].setTipo("t3");
+            m.getCelda()[3][4].setTipo("t3");
+            m.getCelda()[4][0].setTipo("t3");
+            m.getCelda()[4][0].setTipo("t3");
+            m.getCelda()[4][1].setTipo("t3");
+            m.getCelda()[4][2].setTipo("t3");
+            m.getCelda()[4][3].setTipo("t3");
+            m.getCelda()[4][4].setTipo("t3");
+            m.getCelda()[3][0].setDerecha(5);
+            //int[] resultd = menorFilas(m);
+            //imprimir(resultd);
+            int res = cantidadLista(m);
+            backResolver(m,res);
+            //System.out.println(res);
+            //pocasPermutaciones(m,resultd[1],resultd[2],resultd[0]);
+        }
 //          Matriz m = new Matriz();
 //          backCrear(m,5,0);
 //          m.crearMatriz(14);

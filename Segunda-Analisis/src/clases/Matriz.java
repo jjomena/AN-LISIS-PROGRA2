@@ -50,7 +50,7 @@ public class Matriz {
             for(int j=0;j<matriz.length;j++){
                 if("t1".equals(matriz[i][j].getTipo())){
                     System.out.print("("+matriz[i][j].getValor()+",-1"+") ");
-                }else if("t2".equals(matriz[i][j].getTipo())){
+                }else if("t2".equals(matriz[i][j].getTipo())||"t4".equals(matriz[i][j].getTipo())){
                     //System.out.print(matriz[i][j].getValor());
                     System.out.print("("+matriz[i][j].getValor()+",0"+") ");
                 }else{
