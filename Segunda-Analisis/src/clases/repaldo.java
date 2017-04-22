@@ -67,4 +67,30 @@ public class repaldo {
         }
         return m;
     }
+    
+    
+    public static int[]menorFilas(Matriz m){
+        int []result = new int[3];
+        for(int i=0;i<m.getTamano();i++){
+            int contador = 0;
+            int fila = i;
+            for(int j=0;j<m.getTamano();j++){
+                if("t2".equals(m.getCelda()[i][j].getTipo())){
+                    contador++;
+                }else{
+                    if(contador!=0){
+                        if(result[0]>contador  || result[0]==0){
+                            result[0]=contador;
+                            result[1]=fila;
+                            result[2]=j-contador;
+                            contador= 0;
+                        }else{
+                            contador =0;
+                        }
+                    }
+                }
+            }
+        }       
+        return result;
+    }
 }

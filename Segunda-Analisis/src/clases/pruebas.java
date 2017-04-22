@@ -234,7 +234,7 @@ public class pruebas {
                 if("t2".equals(m.getCelda()[i][j].getTipo())){
                     contador++;
                 }else{
-                    if(contador!=0){
+                    if(contador!=0 && contador!=1){
                         if(result[0]>contador  || result[0]==0){
                             result[0]=contador;
                             result[1]=fila;
@@ -314,25 +314,27 @@ public class pruebas {
     public static Matriz backResolver(Matriz matriz,int colocadas){
         Matriz m = new Matriz();
         m.setMatriz((Celda[][])matriz.getMatriz().clone());
-        if(colocadas==m.getTamano()){
+        //System.out.println(colocadas + " tamaño destino: " +m.getDimensiones());
+        int colocada = cantidadLista(m);
+        //colocadas>=m.getDimensiones()+1 || 
+        if(colocadas >= 35){
+            System.out.println("-----------------------------------------");
+            //System.out.println(cantidadLista(m));
+            m.imprimirMatriz();
             return m;
         }else{
             int[]menor = menorFilas(m);
-            if(menor[0]==2){
+            if(menor[0]>1){
                 return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
             }
-            else if(menor[0]==3){
-                //System.out.println(menor[1]+" " + menor[2]);
-                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
-            }
-            else if(menor[0]==4){
-                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
-            }
+//            else if(menor[0]==3){
+//                //System.out.println(menor[1]+" " + menor[2]);
+//                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
+//            }
+//            else if(menor[0]==4){
+//                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
+//            }
         }
-        //if(solucion(m)==false){
-         System.out.println("-------------------------------");
-            m.imprimirMatriz();
-        //}
         return m;
     }
     
@@ -399,27 +401,74 @@ public class pruebas {
         }
         if(per3==1){
             Matriz m = new Matriz();
-            m.crearMatriz(6);
+            m.crearMatriz(10);
             m.getCelda()[0][0].setTipo("t3");
+            m.getCelda()[0][1].setTipo("t3");
+            m.getCelda()[0][1].setAbajo(3);
+            m.getCelda()[0][2].setTipo("t3");
+            m.getCelda()[0][2].setAbajo(6);
+            m.getCelda()[0][5].setTipo("t3");
+            m.getCelda()[0][5].setAbajo(8);
+            m.getCelda()[0][6].setTipo("t3");
+            m.getCelda()[0][6].setAbajo(4);
+            m.getCelda()[0][7].setTipo("t3");
+            m.getCelda()[0][7].setAbajo(10);
             m.getCelda()[1][0].setTipo("t3");
-            m.getCelda()[1][0].setDerecha(14);
-            m.getCelda()[0][4].setTipo("t3");
+            m.getCelda()[1][0].setDerecha(3); 
+            m.getCelda()[1][3].setTipo("t1");
             m.getCelda()[1][4].setTipo("t3");
-            m.getCelda()[2][4].setTipo("t3");
-            m.getCelda()[3][0].setTipo("t3");
-            m.getCelda()[3][3].setTipo("t3");
-            m.getCelda()[3][4].setTipo("t3");
-            m.getCelda()[4][0].setTipo("t3");
-            m.getCelda()[4][0].setDerecha(23);
-            m.getCelda()[3][0].setDerecha(5);
+            m.getCelda()[1][4].setDerecha(6); 
+            m.getCelda()[1][4].setAbajo(6);
+            m.getCelda()[1][8].setTipo("t3");
             m.getCelda()[2][0].setTipo("t3");
-            m.getCelda()[2][0].setDerecha(9);
+            m.getCelda()[2][0].setDerecha(4);
+            m.getCelda()[2][3].setTipo("t3");
+            m.getCelda()[2][3].setDerecha(10);
+            m.getCelda()[2][3].setAbajo(7);
+            m.getCelda()[2][8].setTipo("t3");
+            m.getCelda()[2][8].setAbajo(4); 
+            m.getCelda()[3][1].setTipo("t3");
+            m.getCelda()[3][1].setDerecha(11);
+            m.getCelda()[3][6].setTipo("t3");
+            m.getCelda()[3][6].setDerecha(4);
+            m.getCelda()[3][6].setAbajo(7);            
+            m.getCelda()[4][1].setTipo("t3");
+            m.getCelda()[4][1].setAbajo(4);
+            m.getCelda()[4][2].setTipo("t3");
+            m.getCelda()[4][2].setDerecha(3);
+            m.getCelda()[4][2].setAbajo(11);
+            m.getCelda()[4][5].setTipo("t3");
+            m.getCelda()[4][5].setDerecha(7);
+            m.getCelda()[4][5].setAbajo(8);
+            m.getCelda()[5][0].setTipo("t3");
+            m.getCelda()[5][0].setDerecha(7);
+            m.getCelda()[5][4].setTipo("t3");
+            m.getCelda()[5][4].setDerecha(4);
+            m.getCelda()[5][4].setAbajo(6);
+            m.getCelda()[5][7].setTipo("t3");
+            m.getCelda()[5][7].setAbajo(22);
+            m.getCelda()[6][0].setTipo("t3");
+            m.getCelda()[6][0].setDerecha(4);
+            m.getCelda()[6][3].setTipo("t3");
+            m.getCelda()[6][3].setDerecha(11);
+            m.getCelda()[6][3].setAbajo(4);
+            m.getCelda()[6][8].setTipo("t3");
+            m.getCelda()[6][8].setAbajo(16);
+            m.getCelda()[7][1].setTipo("t3");
+            m.getCelda()[7][1].setDerecha(13);
+            m.getCelda()[7][6].setTipo("t3");
+            m.getCelda()[7][6].setDerecha(17);
+            m.getCelda()[8][1].setTipo("t3");
+            m.getCelda()[8][1].setDerecha(6);
+            m.getCelda()[8][5].setTipo("t1");
+            m.getCelda()[8][6].setTipo("t3");
+            m.getCelda()[8][6].setDerecha(16);
             //int[] resultd = menorFilas(m);
             //imprimir(resultd);
             int res = cantidadLista(m);
             m.imprimirMatriz();
             System.out.println("---------------------------------------");
-            backResolver(m,res);
+            //backResolver(m,res);
             //System.out.println(res);
             //pocasPermutaciones(m,resultd[1],resultd[2],resultd[0]);
         }
