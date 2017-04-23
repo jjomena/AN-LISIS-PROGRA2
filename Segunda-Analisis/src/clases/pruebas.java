@@ -273,24 +273,50 @@ public class pruebas {
         return false;
     }
     
+    public static Celda[][] clonarM(Matriz m){
+        Celda[][] celda = new Celda[m.getTamano()][m.getTamano()];
+        for(int i=0;i<m.getTamano();i++){
+            for(int j=0;j<m.getTamano();j++){
+                Celda aux = new Celda();
+                aux.setAbajo(m.getCelda()[i][j].getAbajo());
+                aux.setArriba(m.getCelda()[i][j].getArriba());
+                aux.setDerecha(m.getCelda()[i][j].getDerecha());
+                aux.setIzquierda(m.getCelda()[i][j].getIzquierda());
+                aux.setTipo(m.getCelda()[i][j].getTipo());
+                aux.setValor(m.getCelda()[i][j].getValor());
+                celda[i][j] = aux;
+            }
+        }
+        return celda;
+    }
+    
     public static Matriz pocasPermutaciones(Matriz matriz,int fila,int columna,int espacios){
         int result[] = new int[espacios];
         Matriz m = new Matriz();
         m.setMatriz((Celda[][])matriz.getMatriz().clone());
+        Celda[][] celd = new Celda[m.getTamano()][m.getTamano()];
+        celd = clonarM(m);
+        Matriz m1 = new Matriz();
+        m1.setMatriz(celd);
         ArrayList<int[]> resultado = new ArrayList<int[]>();
         int numero = m.getCelda()[fila][columna-1].getDerecha();
         backNum(result,numero,resultado,0);
         for(int i=0;i<resultado.size();i++){
             int [] permutacion = resultado.get(i);
-            if(correctoVector(m,permutacion,fila,columna)!=true){
+            if(correctoVector(m1,permutacion,fila,columna)!=true){
                 for(int j=0;j<espacios;j++){
                     m.getCelda()[fila][columna+j].setValor(permutacion[j]);
                     m.getCelda()[fila][columna+j].setTipo("t4");
                 }
-                int res = cantidadLista(m)+espacios;
-                backResolver(m,res);
+                Matriz m2 = new Matriz();
+                Celda[][] c1 = clonarM(m);
+                m2.setMatriz(c1);
+                int res = cantidadLista(m2)+espacios;
+                backResolver(m2,res);
+            }else{
+                //m.imprimirMatriz();
+                //imprimir(permutacion);
             }
-            
         }
         return m;
     }
@@ -311,21 +337,60 @@ public class pruebas {
         return false;
     }
     
-    public static Matriz backResolver(Matriz matriz,int colocadas){
-        Matriz m = new Matriz();
-        m.setMatriz((Celda[][])matriz.getMatriz().clone());
+    public static boolean evaluarColumna(Matriz m,int fila,int columna){
+        int numero = m.getMatriz()[fila][columna].getAbajo();
+        int result = 0;
+        for(int i=1;i<m.getTamano();i++){
+            Celda celda = m.getCelda()[fila+i][columna];
+            if("t4".equals(celda.getTipo())){
+                result += celda.getValor();
+            }else{
+                if(result==numero){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static boolean solucionColumnas(Matriz m){
+        for(int i=0;i<m.getTamano();i++){
+            for(int j=0;j<m.getTamano();j++){
+                Celda celda = m.getCelda()[i][j];
+                if("t3".equals(celda.getTipo())){
+                    if(celda.getAbajo()!=-1){
+                        if(evaluarColumna(m,i,j)!=true){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    public static Matriz backResolver(Matriz m,int colocadas){
+        //Matriz m = new Matriz();
+        //m.setMatriz((Celda[][])matriz.getMatriz().clone());
+        Celda[][] celda = clonarM(m);
         //System.out.println(colocadas + " tamaño destino: " +m.getDimensiones());
         int colocada = cantidadLista(m);
-        //colocadas>=m.getDimensiones()+1 || 
-        if(colocadas >= 35){
-            System.out.println("-----------------------------------------");
-            //System.out.println(cantidadLista(m));
-            m.imprimirMatriz();
+        if(colocada >= m.getDimensiones()){
+            if(solucion(m)==false && solucionColumnas(m)==true){
+                System.out.println("-");
+                m.imprimirMatriz();
+            }
             return m;
         }else{
             int[]menor = menorFilas(m);
+            //m.imprimirMatriz();
             if(menor[0]>1){
                 return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
+            }else{
+                //System.out.println("-----------------------------------------");
+               // m.imprimirMatriz();
             }
 //            else if(menor[0]==3){
 //                //System.out.println(menor[1]+" " + menor[2]);
@@ -335,6 +400,8 @@ public class pruebas {
 //                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
 //            }
         }
+        //System.out.println("-------------------------------");
+        //m.imprimirMatriz();
         return m;
     }
     
@@ -447,6 +514,7 @@ public class pruebas {
             m.getCelda()[5][4].setAbajo(6);
             m.getCelda()[5][7].setTipo("t3");
             m.getCelda()[5][7].setAbajo(22);
+            m.getCelda()[5][8].setTipo("t1");
             m.getCelda()[6][0].setTipo("t3");
             m.getCelda()[6][0].setDerecha(4);
             m.getCelda()[6][3].setTipo("t3");
@@ -468,7 +536,7 @@ public class pruebas {
             int res = cantidadLista(m);
             m.imprimirMatriz();
             System.out.println("---------------------------------------");
-            //backResolver(m,res);
+            backResolver(m,res);
             //System.out.println(res);
             //pocasPermutaciones(m,resultd[1],resultd[2],resultd[0]);
         }

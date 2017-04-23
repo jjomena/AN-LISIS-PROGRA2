@@ -30,7 +30,6 @@ public class Matriz {
     public void crearMatriz(int size){
         matriz = new Celda[size][size];
         tablero = 0;
-        Random  rnd = new Random();
         for(int i=0;i<matriz.length;i++){
             for(int j=0;j<matriz.length;j++){
             Celda celda;
@@ -92,7 +91,7 @@ public class Matriz {
     }
 
     public Celda[][] getMatriz() {
-        return matriz;
+        return matriz.clone();
     }
     
     @Override
