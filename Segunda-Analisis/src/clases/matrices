@@ -4,6 +4,12 @@
             Matriz m = new Matriz();
             m.crearMatriz(6);
             m.getCelda()[0][0].setTipo("t3");
+            m.getCelda()[0][1].setTipo("t3");
+            m.getCelda()[0][1].setAbajo(23);
+            m.getCelda()[0][2].setTipo("t3");
+            m.getCelda()[0][2].setAbajo(19);
+            m.getCelda()[0][3].setTipo("t3");
+            m.getCelda()[0][3].setAbajo(3);
             m.getCelda()[1][0].setTipo("t3");
             m.getCelda()[1][0].setDerecha(14);
             m.getCelda()[0][4].setTipo("t3");
@@ -19,7 +25,7 @@
             m.getCelda()[2][0].setDerecha(9);
 --------------------------------------------------------------------------------
 
-
+            //Si genero solción
             Matriz m = new Matriz();
             m.crearMatriz(10);
             m.getCelda()[0][0].setTipo("t3");
@@ -67,6 +73,7 @@
             m.getCelda()[5][4].setAbajo(6);
             m.getCelda()[5][7].setTipo("t3");
             m.getCelda()[5][7].setAbajo(22);
+            m.getCelda()[5][8].setTipo("t1");
             m.getCelda()[6][0].setTipo("t3");
             m.getCelda()[6][0].setDerecha(4);
             m.getCelda()[6][3].setTipo("t3");
