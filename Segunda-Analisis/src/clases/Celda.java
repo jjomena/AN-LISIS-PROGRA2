@@ -15,25 +15,33 @@ public class Celda {
                           //Si es t3 significa que es casilla indice
     private int valor;    
     private int derecha;
+    private int izquierda;
     private int abajo;
+    private int arriba;
 
     public Celda(){
         this.tipo = "t1";
         this.derecha = -1;
         this.abajo = -1;
         this.valor = -1;
+        this.izquierda = -1;
+        this.arriba = -1;
     }
     public Celda(int valor){
         this.tipo = "t2";
         this.derecha = -1;
         this.abajo = -1;
+        this.izquierda = -1;
+        this.arriba = -1;
         this.valor = valor;
         
     }
-    public Celda(int derecha,int abajo) {
+    public Celda(int derecha,int izquierda,int arriba,int abajo) {
         this.tipo = "t3";
         this.derecha = derecha;
         this.abajo = abajo;
+        this.izquierda = izquierda;
+        this.arriba = arriba;
         this.valor = -1;
     }
 
@@ -69,6 +77,23 @@ public class Celda {
         this.abajo = abajo;
     }
 
+    public int getIzquierda() {
+        return izquierda;
+    }
+
+    public void setIzquierda(int izquierda) {
+        this.izquierda = izquierda;
+    }
+
+    public int getArriba() {
+        return arriba;
+    }
+
+    public void setArriba(int arriba) {
+        this.arriba = arriba;
+    }
+
+    
     @Override
     public String toString() {
         return "Celda{" + "tipo=" + tipo + ", valor=" + valor + ", derecha=" + derecha + ", abajo=" + abajo + '}';
