@@ -15,7 +15,7 @@ import java.util.Random;
 public class pruebas {
     private Matriz matriz;
     private ArrayList<int[]> arreglo = new ArrayList();
-
+    public static int aax=0;
     public Matriz getMatriz() {
         return matriz;
     }
@@ -273,6 +273,29 @@ public class pruebas {
         return false;
     }
     
+    public static int valorAbajo(Matriz m,int fila,int columna){
+        for(int i=fila;i>=0;i--){
+            if("t3".equals(m.getCelda()[i][columna].getTipo())){
+                int numero = m.getCelda()[i][columna].getAbajo();
+                return numero;
+            }
+            
+        }
+        return -1;
+    }
+    
+    public static boolean columnaCorrecto(Matriz m,int[] permutacion,int fila,int columna){
+        for(int i=0;i<permutacion.length;i++){
+            int numero = valorAbajo(m,fila,columna+i);
+            //System.out.println("numero "+numero+" en la fila "+fila+", columna"+(columna+i));
+            //System.out.println("permut "+permutacion[i]);
+            if(numero == -1 || permutacion[i]>numero){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public static Celda[][] clonarM(Matriz m){
         Celda[][] celda = new Celda[m.getTamano()][m.getTamano()];
         for(int i=0;i<m.getTamano();i++){
@@ -290,10 +313,8 @@ public class pruebas {
         return celda;
     }
     
-    public static Matriz pocasPermutaciones(Matriz matriz,int fila,int columna,int espacios){
+    public static Matriz pocasPermutaciones(Matriz m,int fila,int columna,int espacios){
         int result[] = new int[espacios];
-        Matriz m = new Matriz();
-        m.setMatriz((Celda[][])matriz.getMatriz().clone());
         Celda[][] celd = new Celda[m.getTamano()][m.getTamano()];
         celd = clonarM(m);
         Matriz m1 = new Matriz();
@@ -303,7 +324,7 @@ public class pruebas {
         backNum(result,numero,resultado,0);
         for(int i=0;i<resultado.size();i++){
             int [] permutacion = resultado.get(i);
-            if(correctoVector(m1,permutacion,fila,columna)!=true){
+            if(correctoVector(m1,permutacion,fila,columna)!=true && columnaCorrecto(m,permutacion,fila,columna)!=true){
                 for(int j=0;j<espacios;j++){
                     m.getCelda()[fila][columna+j].setValor(permutacion[j]);
                     m.getCelda()[fila][columna+j].setTipo("t4");
@@ -372,10 +393,7 @@ public class pruebas {
     }
     
     public static Matriz backResolver(Matriz m,int colocadas){
-        //Matriz m = new Matriz();
-        //m.setMatriz((Celda[][])matriz.getMatriz().clone());
-        Celda[][] celda = clonarM(m);
-        //System.out.println(colocadas + " tamaño destino: " +m.getDimensiones());
+        aax+=1;
         int colocada = cantidadLista(m);
         if(colocada >= m.getDimensiones()){
             if(solucion(m)==false && solucionColumnas(m)==true){
@@ -384,28 +402,14 @@ public class pruebas {
             }
             return m;
         }else{
+            
             int[]menor = menorFilas(m);
-            //m.imprimirMatriz();
             if(menor[0]>1){
                 return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
-            }else{
-                //System.out.println("-----------------------------------------");
-               // m.imprimirMatriz();
             }
-//            else if(menor[0]==3){
-//                //System.out.println(menor[1]+" " + menor[2]);
-//                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
-//            }
-//            else if(menor[0]==4){
-//                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
-//            }
         }
-        //System.out.println("-------------------------------");
-        //m.imprimirMatriz();
         return m;
     }
-    
-    
     
     
     public static Matriz rellenarPared(Matriz m){
@@ -418,8 +422,8 @@ public class pruebas {
         // TODO code application logic here
 //        pruebas prue  = new pruebas();
         int per = 12; int per1 = 12; int per2=12; int per3 =1;
-        int numero = 23;
-        int casillas = 4;
+        int numero = 46;
+        int casillas = 9;
         int result[] = new int[casillas];
         ArrayList<int[]> resultado = new ArrayList<int[]>();
         if(per ==1){
@@ -474,33 +478,83 @@ public class pruebas {
         }
         if(per3==1){
             Matriz m = new Matriz();
-            m.crearMatriz(6);
+            m.crearMatriz(10);
             m.getCelda()[0][0].setTipo("t3");
             m.getCelda()[0][1].setTipo("t3");
-            m.getCelda()[0][1].setAbajo(23);
+            m.getCelda()[0][1].setAbajo(3);
             m.getCelda()[0][2].setTipo("t3");
-            m.getCelda()[0][2].setAbajo(19);
-            m.getCelda()[0][3].setTipo("t3");
-            m.getCelda()[0][3].setAbajo(3);
+            m.getCelda()[0][2].setAbajo(6);
+            m.getCelda()[0][5].setTipo("t3");
+            m.getCelda()[0][5].setAbajo(8);
+            m.getCelda()[0][6].setTipo("t3");
+            m.getCelda()[0][6].setAbajo(4);
+            m.getCelda()[0][7].setTipo("t3");
+            m.getCelda()[0][7].setAbajo(10);
             m.getCelda()[1][0].setTipo("t3");
-            m.getCelda()[1][0].setDerecha(14);
-            m.getCelda()[0][4].setTipo("t3");
+            m.getCelda()[1][0].setDerecha(3); 
+            m.getCelda()[1][3].setTipo("t1");
             m.getCelda()[1][4].setTipo("t3");
-            m.getCelda()[2][4].setTipo("t3");
-            m.getCelda()[3][0].setTipo("t3");
-            m.getCelda()[3][3].setTipo("t3");
-            m.getCelda()[3][4].setTipo("t3");
-            m.getCelda()[4][0].setTipo("t3");
-            m.getCelda()[4][0].setDerecha(23);
-            m.getCelda()[3][0].setDerecha(5);
+            m.getCelda()[1][4].setDerecha(6); 
+            m.getCelda()[1][4].setAbajo(6);
+            m.getCelda()[1][8].setTipo("t3");
             m.getCelda()[2][0].setTipo("t3");
-            m.getCelda()[2][0].setDerecha(9);
+            m.getCelda()[2][0].setDerecha(4);
+            m.getCelda()[2][3].setTipo("t3");
+            m.getCelda()[2][3].setDerecha(10);
+            m.getCelda()[2][3].setAbajo(7);
+            m.getCelda()[2][8].setTipo("t3");
+            m.getCelda()[2][8].setAbajo(4); 
+            m.getCelda()[3][1].setTipo("t3");
+            m.getCelda()[3][1].setDerecha(11);
+            m.getCelda()[3][6].setTipo("t3");
+            m.getCelda()[3][6].setDerecha(4);
+            m.getCelda()[3][6].setAbajo(7);            
+            m.getCelda()[4][1].setTipo("t3");
+            m.getCelda()[4][1].setAbajo(4);
+            m.getCelda()[4][2].setTipo("t3");
+            m.getCelda()[4][2].setDerecha(3);
+            m.getCelda()[4][2].setAbajo(11);
+            m.getCelda()[4][5].setTipo("t3");
+            m.getCelda()[4][5].setDerecha(7);
+            m.getCelda()[4][5].setAbajo(8);
+            m.getCelda()[5][0].setTipo("t3");
+            m.getCelda()[5][0].setDerecha(7);
+            m.getCelda()[5][4].setTipo("t3");
+            m.getCelda()[5][4].setDerecha(4);
+            m.getCelda()[5][4].setAbajo(6);
+            m.getCelda()[5][7].setTipo("t3");
+            m.getCelda()[5][7].setAbajo(22);
+            m.getCelda()[5][8].setTipo("t1");
+            m.getCelda()[6][0].setTipo("t3");
+            m.getCelda()[6][0].setDerecha(4);
+            m.getCelda()[6][3].setTipo("t3");
+            m.getCelda()[6][3].setDerecha(11);
+            m.getCelda()[6][3].setAbajo(4);
+            m.getCelda()[6][8].setTipo("t3");
+            m.getCelda()[6][8].setAbajo(16);
+            m.getCelda()[7][1].setTipo("t3");
+            m.getCelda()[7][1].setDerecha(13);
+            m.getCelda()[7][6].setTipo("t3");
+            m.getCelda()[7][6].setDerecha(17);
+            m.getCelda()[8][1].setTipo("t3");
+            m.getCelda()[8][1].setDerecha(6);
+            m.getCelda()[8][5].setTipo("t1");
+            m.getCelda()[8][6].setTipo("t3");
+            m.getCelda()[8][6].setDerecha(16);
             //int[] resultd = menorFilas(m);
             //imprimir(resultd);
             int res = cantidadLista(m);
             m.imprimirMatriz();
             System.out.println("---------------------------------------");
             backResolver(m,res);
+            System.out.println(aax);
+            int resultf[] = new int[2];
+            resultf[0] = 3;
+            resultf[1] = 1;
+            //resultf[2] = 2;
+            //if(columnaCorrecto(m,resultf,1,1)!=true){
+              //  System.out.println("siiiiii");
+            //}
             //System.out.println(res);
             //pocasPermutaciones(m,resultd[1],resultd[2],resultd[0]);
         }

@@ -43,7 +43,7 @@ public class repaldo {
     }
     
     
-    public static Matriz pocasPermutaciones(Matriz m,int fila,int columna,int espacios){
+    public static Matriz pocasPermutaciones1(Matriz m,int fila,int columna,int espacios){
         int result[] = new int[espacios];
         ArrayList<int[]> resultado = new ArrayList<int[]>();
         int numero = m.getCelda()[fila][columna-1].getDerecha();

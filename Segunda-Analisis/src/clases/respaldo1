@@ -1,0 +1,60 @@
+
+
+    public static Matriz backResolver(Matriz m,int colocadas){
+        //Matriz m = new Matriz();
+        //m.setMatriz((Celda[][])matriz.getMatriz().clone());
+        Celda[][] celda = clonarM(m);
+        //System.out.println(colocadas + " tamaño destino: " +m.getDimensiones());
+        int colocada = cantidadLista(m);
+        if(colocada >= m.getDimensiones()){
+            if(solucion(m)==false && solucionColumnas(m)==true){
+                System.out.println("-");
+                m.imprimirMatriz();
+            }
+            return m;
+        }else{
+            int[]menor = menorFilas(m);
+            //m.imprimirMatriz();
+            if(menor[0]>1){
+                return pocasPermutaciones(m,menor[1],menor[2],menor[0]);
+            }else{
+                //System.out.println("-----------------------------------------");
+               // m.imprimirMatriz();
+            }
+        }
+        //System.out.println("-------------------------------");
+        //m.imprimirMatriz();
+        return m;
+    }
+
+
+    public static Matriz pocasPermutaciones(Matriz matriz,int fila,int columna,int espacios){
+        int result[] = new int[espacios];
+        Matriz m = new Matriz();
+        m.setMatriz((Celda[][])matriz.getMatriz().clone());
+        Celda[][] celd = new Celda[m.getTamano()][m.getTamano()];
+        celd = clonarM(m);
+        Matriz m1 = new Matriz();
+        m1.setMatriz(celd);
+        ArrayList<int[]> resultado = new ArrayList<int[]>();
+        int numero = m.getCelda()[fila][columna-1].getDerecha();
+        backNum(result,numero,resultado,0);
+        for(int i=0;i<resultado.size();i++){
+            int [] permutacion = resultado.get(i);
+            if(correctoVector(m1,permutacion,fila,columna)!=true){
+                for(int j=0;j<espacios;j++){
+                    m.getCelda()[fila][columna+j].setValor(permutacion[j]);
+                    m.getCelda()[fila][columna+j].setTipo("t4");
+                }
+                Matriz m2 = new Matriz();
+                Celda[][] c1 = clonarM(m);
+                m2.setMatriz(c1);
+                int res = cantidadLista(m2)+espacios;
+                backResolver(m2,res);
+            }else{
+                //m.imprimirMatriz();
+                //imprimir(permutacion);
+            }
+        }
+        return m;
+    }
